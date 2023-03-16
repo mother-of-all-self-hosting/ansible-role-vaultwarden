@@ -17,4 +17,4 @@
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"
   tags:
     - setup-all
-    - setup-miniflux
+    - setup-vaultwarden
