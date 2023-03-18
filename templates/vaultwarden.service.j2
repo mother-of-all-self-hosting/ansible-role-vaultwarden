@@ -39,8 +39,6 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
 			--mount type=bind,src={{ vaultwarden_data_dir_path }},dst=/data \
 			--mount type=bind,src={{ vaultwarden_cache_dir_path }},dst=/cache \
 			--mount type=bind,src={{ vaultwarden_ephemeral_dir_path }},dst=/ephemeral \
-			--mount type=bind,src=/etc/timezone,dst=/etc/timezone,ro \
-			--mount type=bind,src=/etc/localtime,dst=/etc/localtime,ro \
 			--tmpfs=/tmp:rw,noexec,nosuid,size=128m \
 			{{ vaultwarden_container_image }}
 
