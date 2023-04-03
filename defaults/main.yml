@@ -4,7 +4,7 @@ vaultwarden_enabled: true
 
 vaultwarden_identifier: vaultwarden
 
-vaultwarden_version: 1.28.0
+vaultwarden_version: 1.28.1
 
 # The fully-qualified name of your Vaultwarden server (e.g. `vaultwarden.example.com`)
 vaultwarden_hostname: ''
