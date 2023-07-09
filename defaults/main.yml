@@ -4,7 +4,7 @@ vaultwarden_enabled: true
 
 vaultwarden_identifier: vaultwarden
 
-vaultwarden_version: 1.28.1
+vaultwarden_version: 1.29.0
 
 # The fully-qualified name of your Vaultwarden server (e.g. `vaultwarden.example.com`)
 vaultwarden_hostname: ''
@@ -104,14 +104,6 @@ vaultwarden_config_admin_token: ''
 # vaultwarden_config_rocket_port controls the ROCKET_PORT environment variable,
 # which controls Vaultwarden's HTTP port in the container
 vaultwarden_config_rocket_port: 8080
-
-# vaultwarden_config_websocket_enabled controls the WEBSOCKET_ENABLED environment variable,
-# which controls if Vaultwarden enables websockets
-vaultwarden_config_websocket_enabled: true
-
-# vaultwarden_config_rocket_port controls the WEBSOCKET_PORT environment variable,
-# which controls Vaultwarden's Websocket port in the container
-vaultwarden_config_websocket_port: 3012
 
 # vaultwarden_config_rocket_limits controls the ROCKET_LIMITS environment variable,
 # which controls the maximum size of uploaded files.
@@ -237,7 +229,6 @@ vaultwarden_container_labels_traefik_hostname: "{{ vaultwarden_hostname }}"
 # The path prefix must either be `/` or not end with a slash (e.g. `/vaultwarden`).
 vaultwarden_container_labels_traefik_path_prefix: "{{ vaultwarden_path_prefix }}"
 vaultwarden_container_labels_traefik_rule_ui: "Host(`{{ vaultwarden_container_labels_traefik_hostname }}`){% if vaultwarden_container_labels_traefik_path_prefix != '/' %} && PathPrefix(`{{ vaultwarden_container_labels_traefik_path_prefix | quote }}`){% endif %}"
-vaultwarden_container_labels_traefik_rule_websocket: 'Host(`{{ vaultwarden_container_labels_traefik_hostname }}`) && Path(`{{ vaultwarden_container_labels_traefik_path_prefix | quote }}{{ "" if vaultwarden_container_labels_traefik_path_prefix == "/" else "/" }}notifications/hub`)'
 vaultwarden_container_labels_traefik_priority: 0
 vaultwarden_container_labels_traefik_entrypoints: web-secure
 vaultwarden_container_labels_traefik_tls_certResolver: default  # noqa var-naming
@@ -261,11 +252,6 @@ vaultwarden_container_labels_traefik_additional_response_headers_custom: {}
 # Leave empty to not expose it.
 # Example values: `127.0.0.1:8080`, `0.0.0.0:8080`, `8080`.
 vaultwarden_container_http_bind_port: ''
-
-# vaultwarden_container_websocket_bind_port controls whether (and how) the container exposes its websocket port (`vaultwarden_config_websocket_port`).
-# Leave empty to not expose it.
-# Example values: `127.0.0.1:3012`, `0.0.0.0:3012`, `3012`.
-vaultwarden_container_websocket_bind_port: ''
 
 # vaultwarden_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
 # See `../templates/labels.j2` for details.

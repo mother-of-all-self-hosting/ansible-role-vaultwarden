@@ -30,9 +30,6 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
 			{% if vaultwarden_container_http_bind_port %}
 			-p {{ vaultwarden_container_http_bind_port }}:{{ vaultwarden_config_rocket_port }} \
 			{% endif %}
-			{% if vaultwarden_container_websocket_bind_port %}
-			-p {{ vaultwarden_container_websocket_bind_port }}:{{ vaultwarden_config_websocket_port }} \
-			{% endif %}
 			--health-interval=10s \
 			--env-file={{ vaultwarden_base_path }}/env \
 			--label-file={{ vaultwarden_base_path }}/labels \
