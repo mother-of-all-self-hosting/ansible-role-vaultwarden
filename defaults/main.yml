@@ -50,7 +50,15 @@ vaultwarden_data_dir_path: "{{ vaultwarden_base_path }}/data"
 vaultwarden_cache_dir_path: "{{ vaultwarden_base_path }}/cache"
 vaultwarden_ephemeral_dir_path: "{{ vaultwarden_base_path }}/ephemeral"
 
-vaultwarden_systemd_required_systemd_services_list: ['docker.service']
+vaultwarden_systemd_required_systemd_services_list: "{{ vaultwarden_systemd_required_systemd_services_list_default + vaultwarden_systemd_required_systemd_services_list_auto + vaultwarden_systemd_required_systemd_services_list_custom }}"
+vaultwarden_systemd_required_systemd_services_list_default: ['docker.service']
+vaultwarden_systemd_required_systemd_services_list_auto: []
+vaultwarden_systemd_required_systemd_services_list_custom: []
+
+vaultwarden_systemd_wanted_systemd_services_list: "{{ vaultwarden_systemd_wanted_systemd_services_list_default + vaultwarden_systemd_wanted_systemd_services_list_auto + vaultwarden_systemd_wanted_systemd_services_list_custom }}"
+vaultwarden_systemd_wanted_systemd_services_list_default: []
+vaultwarden_systemd_wanted_systemd_services_list_auto: []
+vaultwarden_systemd_wanted_systemd_services_list_custom: []
 
 vaultwarden_database_type: postgres
 vaultwarden_database_hostname: ''
