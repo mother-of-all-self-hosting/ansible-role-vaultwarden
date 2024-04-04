@@ -107,12 +107,12 @@ vaultwarden_config_invitations_allowed: true
 # Note: this is meant to be a list of domain strings (e.g. `['example.com', 'another.com']`, not a comma-separated string like shown in the upstream docs.
 vaultwarden_config_signups_domains_whitelist: []
 
-# vaultwarden_config_admin_token controls the SHOW_PASSWORD_HINT environment variable,
+# vaultwarden_config_show_password_hint controls the SHOW_PASSWORD_HINT environment variable,
 # which can allow showing password hints directly in the user interface.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/Password-hint-display
 vaultwarden_config_show_password_hint: false
 
-# vaultwarden_config_show_password_hint controls the ADMIN_TOKEN environment variable,
+# vaultwarden_config_admin_token controls the ADMIN_TOKEN environment variable,
 # which (if set) exposes an /admin page, where people possesing this token can perform administrative actions.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
 vaultwarden_config_admin_token: ''
