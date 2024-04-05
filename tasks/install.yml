@@ -45,3 +45,17 @@
     src: "{{ role_path }}/templates/vaultwarden.service.j2"
     dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ vaultwarden_identifier }}.service"
     mode: 0640
+
+- name: Check if Vaultwarden config exists
+  ansible.builtin.stat:
+    path: "{{ vaultwarden_data_dir_path }}/config.json"
+  register: config
+
+- name: Clear potentially-existing previous admin_token config value if  vaultwarden_config_admin_token is unset
+  ansible.builtin.lineinfile:
+    name: "{{ vaultwarden_data_dir_path }}/config.json"
+    line: "admin_token"
+    state: absent
+  when:
+    - config.stat.exists
+    - vaultwarden_config_admin_token == ''
