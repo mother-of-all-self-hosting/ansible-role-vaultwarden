@@ -51,11 +51,11 @@
     path: "{{ vaultwarden_data_dir_path }}/config.json"
   register: config
 
-- name: Clear potentially-existing previous admin_token config value if  vaultwarden_config_admin_token is unset
+- name: Clear potentially-existing previous admin_token config value if vaultwarden_config_admin_token is unset
   ansible.builtin.lineinfile:
     name: "{{ vaultwarden_data_dir_path }}/config.json"
     line: "admin_token"
     state: absent
   when:
-    - config.stat.exists
+    - config.stat.exists | bool
     - vaultwarden_config_admin_token == ''
