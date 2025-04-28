@@ -1,3 +1,10 @@
+{#
+SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
+SPDX-FileCopyrightText: 2023 Antoine-Ali Zarrouk
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+#}
+
 [Unit]
 Description=Vaultwarden ({{ vaultwarden_identifier }})
 {% for service in vaultwarden_systemd_required_systemd_services_list %}
