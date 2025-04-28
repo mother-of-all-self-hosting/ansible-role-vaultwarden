@@ -29,27 +29,27 @@ ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_s
 	- when a service is not `healthy`, Traefik does not reverse-proxy to it -- leading to 1 minute downtime every single time this restarts
 #}
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
-			--rm \
-			--name={{ vaultwarden_identifier }} \
-			--log-driver=none \
-			--network={{ vaultwarden_container_network }} \
-			--user={{ vaultwarden_uid }}:{{ vaultwarden_gid }} \
-			--cap-drop=ALL \
-			--read-only \
-			{% if vaultwarden_container_hostname %}
-			--hostname={{ vaultwarden_container_hostname }} \
-			{% endif %}
-			{% if vaultwarden_container_http_bind_port %}
-			-p {{ vaultwarden_container_http_bind_port }}:{{ vaultwarden_config_rocket_port }} \
-			{% endif %}
-			--health-interval=10s \
-			--env-file={{ vaultwarden_base_path }}/env \
-			--label-file={{ vaultwarden_base_path }}/labels \
-			--mount type=bind,src={{ vaultwarden_data_dir_path }},dst=/data \
-			--mount type=bind,src={{ vaultwarden_cache_dir_path }},dst=/cache \
-			--mount type=bind,src={{ vaultwarden_ephemeral_dir_path }},dst=/ephemeral \
-			--tmpfs=/tmp:rw,noexec,nosuid,size=128m \
-			{{ vaultwarden_container_image }}
+      --rm \
+      --name={{ vaultwarden_identifier }} \
+      --log-driver=none \
+      --network={{ vaultwarden_container_network }} \
+      --user={{ vaultwarden_uid }}:{{ vaultwarden_gid }} \
+      --cap-drop=ALL \
+      --read-only \
+      {% if vaultwarden_container_hostname %}
+      --hostname={{ vaultwarden_container_hostname }} \
+      {% endif %}
+      {% if vaultwarden_container_http_bind_port %}
+      -p {{ vaultwarden_container_http_bind_port }}:{{ vaultwarden_config_rocket_port }} \
+      {% endif %}
+      --health-interval=10s \
+      --env-file={{ vaultwarden_base_path }}/env \
+      --label-file={{ vaultwarden_base_path }}/labels \
+      --mount type=bind,src={{ vaultwarden_data_dir_path }},dst=/data \
+      --mount type=bind,src={{ vaultwarden_cache_dir_path }},dst=/cache \
+      --mount type=bind,src={{ vaultwarden_ephemeral_dir_path }},dst=/ephemeral \
+      --tmpfs=/tmp:rw,noexec,nosuid,size=128m \
+      {{ vaultwarden_container_image }}
 
 {% for network in vaultwarden_container_additional_networks %}
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ vaultwarden_identifier }}
