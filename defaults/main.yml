@@ -1,6 +1,10 @@
-# SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
 # SPDX-FileCopyrightText: 2023 Antoine-Ali Zarrouk
+# SPDX-FileCopyrightText: 2023 - 2024 Nikita Chernyi
+# SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2024 Sergio Durigan Junior
+# SPDX-FileCopyrightText: 2025 MASH project contributors
 # SPDX-FileCopyrightText: 2025 spatterlight
+# SPDX-FileCopyrightText: 2025 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -42,11 +46,12 @@ vaultwarden_container_registry_prefix_upstream: "{{ vaultwarden_container_regist
 vaultwarden_container_registry_prefix_upstream_default: ghcr.io/
 vaultwarden_container_image_force_pull: "{{ vaultwarden_container_image.endswith(':latest') }}"
 
-# vaultwarden_container_http_bind_port controls whether (and how) the container exposes its HTTP port (`vaultwarden_config_rocket_port`).
-# Leave empty to not expose it.
-# Example values: `127.0.0.1:8080`, `0.0.0.0:8080`, `8080`.
+# Controls whether the container exposes its HTTP port (tcp/8080 in the container).
+#
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 vaultwarden_container_http_bind_port: ''
 
+# The base container network. It will be auto-created by this role if it doesn't exist already.
 vaultwarden_container_network: "{{ vaultwarden_identifier }}"
 
 # A list of additional container networks that the container would be connected to.
@@ -162,11 +167,13 @@ vaultwarden_floc_optout_enabled: true
 # See: `vaultwarden_http_header_strict_transport_security`
 vaultwarden_hsts_preload_enabled: false
 
+# List of systemd services that the Vaultwarden systemd service depends on
 vaultwarden_systemd_required_systemd_services_list: "{{ vaultwarden_systemd_required_systemd_services_list_default + vaultwarden_systemd_required_systemd_services_list_auto + vaultwarden_systemd_required_systemd_services_list_custom }}"
 vaultwarden_systemd_required_systemd_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
 vaultwarden_systemd_required_systemd_services_list_auto: []
 vaultwarden_systemd_required_systemd_services_list_custom: []
 
+# List of systemd services that the Vaultwarden systemd service wants
 vaultwarden_systemd_wanted_systemd_services_list: "{{ vaultwarden_systemd_wanted_systemd_services_list_default + vaultwarden_systemd_wanted_systemd_services_list_auto + vaultwarden_systemd_wanted_systemd_services_list_custom }}"
 vaultwarden_systemd_wanted_systemd_services_list_default: []
 vaultwarden_systemd_wanted_systemd_services_list_auto: []
