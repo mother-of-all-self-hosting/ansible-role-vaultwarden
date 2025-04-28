@@ -6,7 +6,7 @@
 
 ---
 
-# Vaultwaden is a lightweight unofficial and compatible implementation of the Bitwarden password manager.
+# Vaultwarden is a lightweight unofficial and compatible implementation of the Bitwarden password manager.
 # Project source code URL: https://github.com/dani-garcia/vaultwarden
 
 vaultwarden_enabled: true
