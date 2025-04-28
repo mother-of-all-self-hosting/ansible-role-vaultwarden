@@ -110,6 +110,9 @@ vaultwarden_container_labels_traefik_additional_response_headers_custom: {}
 #   another.label="here"
 vaultwarden_container_labels_additional_labels: ''
 
+# A list of extra arguments to pass to the container (`docker run` command)
+vaultwarden_container_extra_arguments: []
+
 # Intentionally leaving this blank, instead of defaulting it to `vaultwarden_hostname`, to avoid specifying a hostname
 # which could render other services on that hostname potentially unreachable.
 # See: https://github.com/mother-of-all-self-hosting/mash-playbook/issues/391
