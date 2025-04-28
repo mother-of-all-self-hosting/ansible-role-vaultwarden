@@ -13,6 +13,7 @@ vaultwarden_enabled: true
 
 vaultwarden_identifier: vaultwarden
 
+# renovate: datasource=docker depName=dani-garcia/vaultwarden versioning=semver
 vaultwarden_version: 1.33.2
 
 # The fully-qualified name of your Vaultwarden server (e.g. `vaultwarden.example.com`)
