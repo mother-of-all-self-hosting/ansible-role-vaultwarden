@@ -51,7 +51,7 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/systemd/vaultwarden.service.j2"
     dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ vaultwarden_identifier }}.service"
-    mode: 0640
+    mode: 0644
 
 - name: Check if Vaultwarden config exists
   ansible.builtin.stat:
