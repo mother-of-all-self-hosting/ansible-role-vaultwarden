@@ -47,7 +47,6 @@ vaultwarden_container_image_registry_prefix_upstream_default: ghcr.io/
 vaultwarden_container_image_force_pull: "{{ vaultwarden_container_image.endswith(':latest') }}"
 
 vaultwarden_container_image_self_build: false
-vaultwarden_container_image_name: "dani-garcia/vaultwarden:{{ vaultwarden_container_repo_version }}"
 vaultwarden_container_repo: "https://github.com/dani-garcia/vaultwarden.git"
 vaultwarden_container_repo_version: "{{ vaultwarden_version if vaultwarden_version != 'latest' else 'main' }}"
 vaultwarden_container_src_files_path: "{{ vaultwarden_base_path }}/docker-src"
