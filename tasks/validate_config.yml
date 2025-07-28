@@ -10,6 +10,7 @@
       Please change your configuration to rename the variable (`{{ item.old }}` -> `{{ item.new }}`).
   when: "lookup('ansible.builtin.varnames', ('^' + item.old + '$'), wantlist=True) | length > 0"
   with_items:
+    - { "old": "vaultwarden_container_labels_traefik_rule_ui", "new": "vaultwarden_container_labels_traefik_rule" }
     - { "old": "vaultwarden_container_labels_traefik_rule_websocket", "new": "<Removed. See https://github.com/dani-garcia/vaultwarden/pull/3404>" }
     - { "old": "vaultwarden_config_websocket_enabled", "new": "<Removed. See https://github.com/dani-garcia/vaultwarden/pull/3404>" }
     - { "old": "vaultwarden_config_websocket_port", "new": "<Removed. See https://github.com/dani-garcia/vaultwarden/pull/3404>" }

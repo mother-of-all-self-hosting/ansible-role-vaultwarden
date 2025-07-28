@@ -43,7 +43,7 @@ traefik.http.middlewares.{{ vaultwarden_identifier }}-add-response-headers.heade
 {% set middlewares = middlewares + [vaultwarden_identifier + '-add-response-headers'] %}
 {% endif %}
 
-traefik.http.routers.{{ vaultwarden_identifier }}.rule={{ vaultwarden_container_labels_traefik_rule_ui }}
+traefik.http.routers.{{ vaultwarden_identifier }}.rule={{ vaultwarden_container_labels_traefik_rule }}
 
 {% if middlewares | length > 0 %}
 traefik.http.routers.{{ vaultwarden_identifier }}.middlewares={{ middlewares | join(',') }}

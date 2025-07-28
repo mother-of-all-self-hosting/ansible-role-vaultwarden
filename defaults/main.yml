@@ -83,7 +83,7 @@ vaultwarden_container_labels_traefik_docker_network: "{{ vaultwarden_container_n
 vaultwarden_container_labels_traefik_hostname: "{{ vaultwarden_hostname }}"
 # The path prefix must either be `/` or not end with a slash (e.g. `/vaultwarden`).
 vaultwarden_container_labels_traefik_path_prefix: "{{ vaultwarden_path_prefix }}"
-vaultwarden_container_labels_traefik_rule_ui: "Host(`{{ vaultwarden_container_labels_traefik_hostname }}`){% if vaultwarden_container_labels_traefik_path_prefix != '/' %} && PathPrefix(`{{ vaultwarden_container_labels_traefik_path_prefix | quote }}`){% endif %}"
+vaultwarden_container_labels_traefik_rule: "Host(`{{ vaultwarden_container_labels_traefik_hostname }}`){% if vaultwarden_container_labels_traefik_path_prefix != '/' %} && PathPrefix(`{{ vaultwarden_container_labels_traefik_path_prefix | quote }}`){% endif %}"
 vaultwarden_container_labels_traefik_priority: 0
 vaultwarden_container_labels_traefik_entrypoints: web-secure
 vaultwarden_container_labels_traefik_tls: "{{ vaultwarden_container_labels_traefik_entrypoints != 'web' }}"
