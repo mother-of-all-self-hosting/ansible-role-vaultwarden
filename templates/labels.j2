@@ -29,6 +29,20 @@ traefik.http.middlewares.{{ vaultwarden_identifier }}-no-trailing-slash-redirect
 traefik.http.middlewares.{{ vaultwarden_identifier }}-no-trailing-slash-redirect.redirectregex.replacement=${1}://${2}{{ vaultwarden_path_prefix | quote }}/
 {% endif %}
 
+{% if vaultwarden_container_labels_traefik_additional_request_headers.keys() | length > 0 %}
+{% for name, value in vaultwarden_container_labels_traefik_additional_request_headers.items() %}
+traefik.http.middlewares.{{ vaultwarden_identifier }}-add-request-headers.headers.customrequestheaders.{{ name }}={{ value }}
+{% endfor %}
+{% set middlewares = middlewares + [vaultwarden_identifier + '-add-request-headers'] %}
+{% endif %}
+
+{% if vaultwarden_container_labels_traefik_additional_response_headers.keys() | length > 0 %}
+{% for name, value in vaultwarden_container_labels_traefik_additional_response_headers.items() %}
+traefik.http.middlewares.{{ vaultwarden_identifier }}-add-response-headers.headers.customresponseheaders.{{ name }}={{ value }}
+{% endfor %}
+{% set middlewares = middlewares + [vaultwarden_identifier + '-add-response-headers'] %}
+{% endif %}
+
 traefik.http.routers.{{ vaultwarden_identifier }}.rule={{ vaultwarden_container_labels_traefik_rule_ui }}
 
 {% if middlewares | length > 0 %}
