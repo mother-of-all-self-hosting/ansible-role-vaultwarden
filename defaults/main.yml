@@ -194,7 +194,7 @@ vaultwarden_database_type: postgres
 vaultwarden_database_hostname: ''
 vaultwarden_database_port: 5432
 vaultwarden_database_name: vaultwarden
-vaultwarden_database_username: ''
+vaultwarden_database_username: vaultwarden
 vaultwarden_database_password: ''
 # Use this to set the sslmode parameter of the SSL connection
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
