@@ -58,6 +58,12 @@
   with_items:
     - vaultwarden_config_smtp_from
 
+- name: Fail if SMTP security setting is invalid
+  ansible.builtin.fail:
+    msg: >-
+      vaultwarden_config_smtp_security must be 'starttls', 'force_tls', or 'off'
+  when: "vaultwarden_config_smtp_security not in ['starttls', 'force_tls', 'off']"
+
 - name: Run if Traefik is enabled
   when: vaultwarden_container_labels_traefik_enabled | bool
   block:
