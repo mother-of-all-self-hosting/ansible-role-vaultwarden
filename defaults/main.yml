@@ -264,7 +264,7 @@ vaultwarden_config_rocket_limits: "{json={{ vaultwarden_max_json_mb | int * 1024
 
 # vaultwarden_config_smtp_from controls the SMTP_FROM environment variable.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration
-vaultwarden_config_smtp_from: "noreply@{{ vaultwarden_hostname }}"
+vaultwarden_config_smtp_from: ""
 
 # vaultwarden_config_smtp_host controls the SMTP_HOST environment variable.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration
