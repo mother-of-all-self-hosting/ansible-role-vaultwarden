@@ -64,6 +64,12 @@
       vaultwarden_config_smtp_security must be 'starttls', 'force_tls', or 'off'
   when: "vaultwarden_config_smtp_security not in ['starttls', 'force_tls', 'off']"
 
+- name: Fail if Vaultwarden logging level is invalid
+  ansible.builtin.fail:
+    msg: >-
+      vaultwarden_config_log_level must be 'trace', 'debug', 'info', 'warn', 'error', or 'off'
+  when: "vaultwarden_config_log_level not in ['trace', 'debug', 'info', 'warn', 'error', 'off']"
+
 - name: Run if Traefik is enabled
   when: vaultwarden_container_labels_traefik_enabled | bool
   block:
