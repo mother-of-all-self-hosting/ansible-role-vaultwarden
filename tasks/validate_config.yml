@@ -1,4 +1,6 @@
+# SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 # SPDX-FileCopyrightText: 2023 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2025 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -47,6 +49,14 @@
   when: "vaultwarden_database_type == 'postgres' and lookup('vars', item, default='') | string | length == 0"
   with_items:
     - vaultwarden_database_password
+
+- name: Fail if SMTP settings are missing (and SMTP is enabled by setting host)
+  ansible.builtin.fail:
+    msg: >-
+      You need to define a required configuration setting (`{{ item }}`) to correctly set up email via SMTP.
+  when: "vaultwarden_config_smtp_host !='' and lookup('vars', item, default='') | string | length == 0"
+  with_items:
+    - vaultwarden_config_smtp_from
 
 - name: Run if Traefik is enabled
   when: vaultwarden_container_labels_traefik_enabled | bool
