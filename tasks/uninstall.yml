@@ -32,6 +32,11 @@
         - env
         - labels
 
+    - name: Ensure Vaultwarden cache path does not exist
+      ansible.builtin.file:
+        path: "{{ vaultwarden_cache_path }}"
+        state: absent
+
     - name: Ensure Vaultwarden ephemeral path does not exist
       ansible.builtin.file:
         path: "{{ vaultwarden_ephemeral_path }}"

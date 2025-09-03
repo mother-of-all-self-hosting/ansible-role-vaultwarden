@@ -17,8 +17,8 @@ vaultwarden_enabled: true
 
 vaultwarden_identifier: vaultwarden
 vaultwarden_base_path: "/vaultwarden"
-vaultwarden_data_path: "{{ vaultwarden_base_path }}/data"
 vaultwarden_cache_path: "{{ vaultwarden_base_path }}/cache"
+vaultwarden_data_path: "{{ vaultwarden_base_path }}/data"
 vaultwarden_ephemeral_path: "{{ vaultwarden_base_path }}/ephemeral"
 
 # renovate: datasource=docker depName=ghcr.io/dani-garcia/vaultwarden versioning=semver
