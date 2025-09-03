@@ -32,6 +32,11 @@
         - env
         - labels
 
+    - name: Ensure Vaultwarden ephemeral path does not exist
+      ansible.builtin.file:
+        path: "{{ vaultwarden_ephemeral_path }}"
+        state: absent
+
     - name: Ensure Vaultwarden image source files path does not exist
       ansible.builtin.file:
         path: "{{ vaultwarden_container_image_self_build_src_files_path }}"
