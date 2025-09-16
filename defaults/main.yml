@@ -171,7 +171,7 @@ vaultwarden_http_header_strict_transport_security: "max-age=31536000; includeSub
 # - https://amifloced.org/
 #
 # Of course, a better solution is to just stop using browsers (like Chrome), which participate in such tracking practices.
-# See: `vaultwarden_content_permission_policy`
+# See: `vaultwarden_http_header_permissions_policy`
 vaultwarden_floc_optout_enabled: true
 
 # Controls if HSTS preloading is enabled
