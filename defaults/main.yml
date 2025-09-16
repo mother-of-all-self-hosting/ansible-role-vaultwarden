@@ -137,7 +137,9 @@ vaultwarden_container_hostname: ""
 # Learn more about it is here:
 # - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 # - https://portswigger.net/web-security/cross-site-scripting/reflected
-vaultwarden_http_header_xss_protection: "1; mode=block"
+#
+# We intentionally don't set this, because Vaultwarden does it and we'd rather not override its (better) value.
+vaultwarden_http_header_xss_protection: ""
 
 # Specifies the value of the `X-Content-Type-Options` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
@@ -146,12 +148,14 @@ vaultwarden_http_header_content_type_options: nosniff
 # Specifies the value of the `Content-Security-Policy` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 #
-# We intentionally don't set this, because Vaultwarden does it and we'd rather not override its value.
+# We intentionally don't set this, because Vaultwarden does it and we'd rather not override its (better) value.
 vaultwarden_http_header_content_security_policy: ""
 
 # Specifies the value of the `Permissions-Policy` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
-vaultwarden_http_header_permissions_policy: "{{ 'interest-cohort=()' if vaultwarden_floc_optout_enabled else '' }}"
+#
+# We intentionally don't set this, because Vaultwarden does it and we'd rather not override its (better) value.
+vaultwarden_http_header_permissions_policy: ""
 
 # Specifies the value of the `Strict-Transport-Security` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
