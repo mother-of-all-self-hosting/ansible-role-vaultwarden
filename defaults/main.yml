@@ -149,6 +149,8 @@ vaultwarden_http_header_content_type_options: nosniff
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 #
 # We intentionally don't set this, because Vaultwarden does it and we'd rather not override its (better) value.
+# See: `vaultwarden_config_allowed_iframe_ancestors` and `vaultwarden_config_allowed_connect_src` for ways to
+# influence the `Content-Security-Policy` value set by Vaultwarden.
 vaultwarden_http_header_content_security_policy: ""
 
 # Specifies the value of the `Permissions-Policy` header.
@@ -334,6 +336,24 @@ vaultwarden_config_extended_logging: false
 # which enable experimental feature flags for clients.
 # This is a comma-separated list of flags, e.g. "flag1,flag2,flag3".
 vaultwarden_config_experimental_client_feature_flags: ''
+
+# vaultwarden_config_allowed_iframe_ancestors controls the ALLOWED_IFRAME_ANCESTORS environment variable,
+# which controls the additional allowed origins for the `frame-ancestors` Content-Security-Policy directive automatically set by Vaultwarden.
+# See: https://github.com/dani-garcia/vaultwarden/blob/5d84f17600e179280e44c391b92ee9eecc2b7cdc/src/util.rs#L92-L122
+#
+# Example: "https://example.com, https://example.org"
+#
+# If `vaultwarden_http_header_content_security_policy` is explicitly set, this will be ignored.
+vaultwarden_config_allowed_iframe_ancestors: ''
+
+# vaultwarden_config_allowed_connect_src controls the ALLOWED_CONNECT_SRC environment variable,
+# which controls the additional allowed origins for the `connect-src` Content-Security-Policy directive automatically set by Vaultwarden.
+# See: https://github.com/dani-garcia/vaultwarden/blob/5d84f17600e179280e44c391b92ee9eecc2b7cdc/src/util.rs#L124-L127
+#
+# Example: "https://example.com, https://example.org"
+#
+# If `vaultwarden_http_header_content_security_policy` is explicitly set, this will be ignored.
+vaultwarden_config_allowed_connect_src: ''
 
 # NOTE:
 # Additional environment variables for configuration can be discovered from https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
