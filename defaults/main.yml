@@ -109,7 +109,7 @@ vaultwarden_container_labels_traefik_additional_response_headers_auto: |
     | combine ({'X-XSS-Protection': vaultwarden_http_header_xss_protection} if vaultwarden_http_header_xss_protection else {})
     | combine ({'X-Content-Type-Options': vaultwarden_http_header_content_type_options} if vaultwarden_http_header_content_type_options else {})
     | combine ({'Content-Security-Policy': vaultwarden_http_header_content_security_policy} if vaultwarden_http_header_content_security_policy else {})
-    | combine ({'Permission-Policy': vaultwarden_http_header_content_permission_policy} if vaultwarden_http_header_content_permission_policy else {})
+    | combine ({'Permissions-Policy': vaultwarden_http_header_permissions_policy} if vaultwarden_http_header_permissions_policy else {})
     | combine ({'Strict-Transport-Security': vaultwarden_http_header_strict_transport_security} if vaultwarden_http_header_strict_transport_security and vaultwarden_container_labels_traefik_tls else {})
   }}
 vaultwarden_container_labels_traefik_additional_response_headers_custom: {}
@@ -145,11 +145,13 @@ vaultwarden_http_header_content_type_options: nosniff
 
 # Specifies the value of the `Content-Security-Policy` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
-vaultwarden_http_header_content_security_policy: frame-ancestors 'self'
+#
+# We intentionally don't set this, because Vaultwarden does it and we'd rather not override its value.
+vaultwarden_http_header_content_security_policy: ""
 
-# Specifies the value of the `Permission-Policy` header.
-# See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permission-Policy
-vaultwarden_http_header_content_permission_policy: "{{ 'interest-cohort=()' if vaultwarden_floc_optout_enabled else '' }}"
+# Specifies the value of the `Permissions-Policy` header.
+# See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
+vaultwarden_http_header_permissions_policy: "{{ 'interest-cohort=()' if vaultwarden_floc_optout_enabled else '' }}"
 
 # Specifies the value of the `Strict-Transport-Security` header.
 # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
