@@ -364,6 +364,9 @@ vaultwarden_config_allowed_connect_src: ''
 # See: https://github.com/dani-garcia/vaultwarden/wiki/Changing-the-API-request-size-limit
 vaultwarden_max_json_mb: 10
 
+# Specify the timezone
+vaultwarden_environment_variables_tz: UTC
+
 # vaultwarden_environment_variables_additional_variables contains a multiline string with additional environment variables to pass to the container.
 #
 # Example:
