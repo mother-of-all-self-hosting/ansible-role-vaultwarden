@@ -116,12 +116,15 @@ vaultwarden_container_labels_traefik_additional_response_headers_custom: {}
 
 # vaultwarden_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
 # See `../templates/labels.j2` for details.
+# To add your own custom labels, use `vaultwarden_container_labels_additional_labels_custom`
 #
 # Example:
-# vaultwarden_container_labels_additional_labels: |
+# vaultwarden_container_labels_additional_labels_custom: |
 #   my.label=1
 #   another.label="here"
-vaultwarden_container_labels_additional_labels: ''
+vaultwarden_container_labels_additional_labels: "{{ vaultwarden_container_labels_additional_labels_auto | combine(vaultwarden_container_labels_additional_labels_custom) }}"
+vaultwarden_container_labels_additional_labels_auto: {}
+vaultwarden_container_labels_additional_labels_custom: {}
 
 # A list of extra arguments to pass to the container (`docker run` command)
 vaultwarden_container_extra_arguments: "{{ vaultwarden_container_extra_arguments_auto + vaultwarden_container_extra_arguments_custom }}"
