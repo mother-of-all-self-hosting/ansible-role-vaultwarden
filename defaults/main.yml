@@ -124,7 +124,9 @@ vaultwarden_container_labels_traefik_additional_response_headers_custom: {}
 vaultwarden_container_labels_additional_labels: ''
 
 # A list of extra arguments to pass to the container (`docker run` command)
-vaultwarden_container_extra_arguments: []
+vaultwarden_container_extra_arguments: "{{ vaultwarden_container_extra_arguments_auto + vaultwarden_container_extra_arguments_custom }}"
+vaultwarden_container_extra_arguments_auto: []
+vaultwarden_container_extra_arguments_custom: []
 
 # Intentionally leaving this blank, instead of defaulting it to `vaultwarden_hostname`, to avoid specifying a hostname
 # which could render other services on that hostname potentially unreachable.
