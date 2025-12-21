@@ -27,7 +27,7 @@ vaultwarden_version: 1.34.3
 vaultwarden_uid: ""
 vaultwarden_gid: ""
 
-# The fully-qualified name of your Vaultwarden server (e.g. `vaultwarden.example.com`)
+# The hostname at which Vaultwarden is served.
 vaultwarden_hostname: ""
 
 # vaultwarden_path_prefix controls the URL prefix where Vaultwarden will be exposed to.
