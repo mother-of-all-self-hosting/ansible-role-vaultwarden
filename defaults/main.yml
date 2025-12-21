@@ -126,7 +126,7 @@ vaultwarden_container_labels_additional_labels: "{{ vaultwarden_container_labels
 vaultwarden_container_labels_additional_labels_auto: {}
 vaultwarden_container_labels_additional_labels_custom: {}
 
-# A list of extra arguments to pass to the container (`docker run` command)
+# A list of extra arguments to pass to the container (`docker create` command)
 vaultwarden_container_extra_arguments: "{{ vaultwarden_container_extra_arguments_auto + vaultwarden_container_extra_arguments_custom }}"
 vaultwarden_container_extra_arguments_auto: []
 vaultwarden_container_extra_arguments_custom: []
