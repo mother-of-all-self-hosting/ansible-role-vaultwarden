@@ -24,11 +24,11 @@ vaultwarden_ephemeral_path: "{{ vaultwarden_base_path }}/ephemeral"
 # renovate: datasource=docker depName=ghcr.io/dani-garcia/vaultwarden versioning=semver
 vaultwarden_version: 1.34.3
 
-vaultwarden_uid: ''
-vaultwarden_gid: ''
+vaultwarden_uid: ""
+vaultwarden_gid: ""
 
 # The fully-qualified name of your Vaultwarden server (e.g. `vaultwarden.example.com`)
-vaultwarden_hostname: ''
+vaultwarden_hostname: ""
 
 # vaultwarden_path_prefix controls the URL prefix where Vaultwarden will be exposed to.
 #
@@ -56,7 +56,7 @@ vaultwarden_container_image_self_build_environment_buildplatform: linux/amd64
 # Controls whether the container exposes its HTTP port (tcp/8080 in the container).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
-vaultwarden_container_http_bind_port: ''
+vaultwarden_container_http_bind_port: ""
 
 # The base container network. It will be auto-created by this role if it doesn't exist already.
 vaultwarden_container_network: "{{ vaultwarden_identifier }}"
@@ -206,20 +206,20 @@ vaultwarden_systemd_wanted_services_list_custom: []
 # Valid values: mysql, postgres, sqlite
 vaultwarden_database_type: postgres
 
-vaultwarden_database_postgres_hostname: ''
+vaultwarden_database_postgres_hostname: ""
 vaultwarden_database_postgres_port: 5432
 vaultwarden_database_postgres_username: vaultwarden
-vaultwarden_database_postgres_password: ''
+vaultwarden_database_postgres_password: ""
 # Use this to set the sslmode parameter of the SSL connection
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
 # It's even potentially buggy too.
 # See: https://github.com/dani-garcia/vaultwarden/issues/2386
 vaultwarden_database_postgres_sslmode: disable
 
-vaultwarden_database_mysql_hostname: ''
+vaultwarden_database_mysql_hostname: ""
 vaultwarden_database_mysql_port: 3306
 vaultwarden_database_mysql_username: vaultwarden
-vaultwarden_database_mysql_password: ''
+vaultwarden_database_mysql_password: ""
 
 vaultwarden_database_name: vaultwarden
 
@@ -277,7 +277,7 @@ vaultwarden_config_require_device_email: false
 # vaultwarden_config_admin_token controls the ADMIN_TOKEN environment variable,
 # which (if set) exposes an /admin page, where people possessing this token can perform administrative actions.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
-vaultwarden_config_admin_token: ''
+vaultwarden_config_admin_token: ""
 
 # vaultwarden_config_rocket_port controls the ROCKET_PORT environment variable,
 # which controls Vaultwarden's HTTP port in the container
@@ -295,7 +295,7 @@ vaultwarden_config_smtp_from: ""
 
 # vaultwarden_config_smtp_host controls the SMTP_HOST environment variable.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration
-vaultwarden_config_smtp_host: ''
+vaultwarden_config_smtp_host: ""
 
 # vaultwarden_config_smtp_port controls the SMTP_PORT environment variable.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration
@@ -309,11 +309,11 @@ vaultwarden_config_smtp_security: starttls
 
 # vaultwarden_config_smtp_username controls the SMTP_USERNAME environment variable.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration
-vaultwarden_config_smtp_username: ''
+vaultwarden_config_smtp_username: ""
 
 # vaultwarden_config_smtp_password controls the SMTP_PASSWORD environment variable.
 # See: https://github.com/dani-garcia/vaultwarden/wiki/SMTP-Configuration
-vaultwarden_config_smtp_password: ''
+vaultwarden_config_smtp_password: ""
 
 # vaultwarden_config_smtp_auth_mechanism controls the SMTP_AUTH_MECHANISM environment variable.
 # Valid values: Plain, Login, Xoauth2. Multiple may be provided when comma-separated
@@ -340,7 +340,7 @@ vaultwarden_config_extended_logging: false
 # vaultwarden_config_experimental_client_feature_flags controls the EXPERIMENTAL_CLIENT_FEATURE_FLAGS environment variable,
 # which enable experimental feature flags for clients.
 # This is a comma-separated list of flags, e.g. "flag1,flag2,flag3".
-vaultwarden_config_experimental_client_feature_flags: ''
+vaultwarden_config_experimental_client_feature_flags: ""
 
 # vaultwarden_config_allowed_iframe_ancestors controls the ALLOWED_IFRAME_ANCESTORS environment variable,
 # which controls the additional allowed origins for the `frame-ancestors` Content-Security-Policy directive automatically set by Vaultwarden.
@@ -349,7 +349,7 @@ vaultwarden_config_experimental_client_feature_flags: ''
 # Example: "https://example.com, https://example.org"
 #
 # If `vaultwarden_http_header_content_security_policy` is explicitly set, this will be ignored.
-vaultwarden_config_allowed_iframe_ancestors: ''
+vaultwarden_config_allowed_iframe_ancestors: ""
 
 # vaultwarden_config_allowed_connect_src controls the ALLOWED_CONNECT_SRC environment variable,
 # which controls the additional allowed origins for the `connect-src` Content-Security-Policy directive automatically set by Vaultwarden.
@@ -358,7 +358,7 @@ vaultwarden_config_allowed_iframe_ancestors: ''
 # Example: "https://example.com, https://example.org"
 #
 # If `vaultwarden_http_header_content_security_policy` is explicitly set, this will be ignored.
-vaultwarden_config_allowed_connect_src: ''
+vaultwarden_config_allowed_connect_src: ""
 
 # NOTE:
 # Additional environment variables for configuration can be discovered from https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
@@ -378,4 +378,4 @@ vaultwarden_environment_variables_tz: UTC
 # vaultwarden_environment_variables_additional_variables: |
 #   VAR=1
 #   ANOTHER=value
-vaultwarden_environment_variables_additional_variables: ''
+vaultwarden_environment_variables_additional_variables: ""
