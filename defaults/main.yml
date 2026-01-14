@@ -30,7 +30,7 @@ vaultwarden_gid: ""
 # The hostname at which Vaultwarden is served.
 vaultwarden_hostname: ""
 
-# vaultwarden_path_prefix controls the URL prefix where Vaultwarden will be exposed to.
+# The path at which Vaultwarden is served.
 #
 # By default (`/` prefix), it's accessible at `https://VAULTWARDEN_DOMAIN/`,
 # but you can use another prefix for additional security.
