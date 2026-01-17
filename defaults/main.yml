@@ -53,7 +53,7 @@ vaultwarden_container_image_self_build_repo_version: "{{ vaultwarden_version if 
 vaultwarden_container_image_self_build_src_files_path: "{{ vaultwarden_base_path }}/docker-src"
 vaultwarden_container_image_self_build_environment_buildplatform: linux/amd64
 
-# Controls whether the container exposes its HTTP port (tcp/8080 in the container).
+# Specify how the container publishes its HTTP port (as defined by `vaultwarden_container_network`).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 vaultwarden_container_http_bind_port: ""
