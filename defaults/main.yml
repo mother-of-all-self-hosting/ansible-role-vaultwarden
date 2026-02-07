@@ -62,12 +62,8 @@ vaultwarden_container_http_bind_port: ""
 vaultwarden_container_network: "{{ vaultwarden_identifier }}"
 
 # A list of additional container networks that the container would be connected to.
-# The playbook does not create these networks, so make sure they already exist.
-#
-# Use this to expose this container to another reverse proxy, which runs in a different container network,
-# without exposing all other container services to that other reverse-proxy.
-#
-# For background, see: https://github.com/spantaleev/matrix-docker-ansible-deploy/issues/1498
+# The role does not create these networks, so make sure they already exist.
+# Use this to expose this container to another reverse proxy, which runs in a different container network.
 vaultwarden_container_additional_networks: "{{ vaultwarden_container_additional_networks_auto + vaultwarden_container_additional_networks_custom }}"
 # vaultwarden_container_additional_networks_auto is reserved for usage by the playbook.
 # Your custom networks should go into vaultwarden_container_additional_networks_custom.
