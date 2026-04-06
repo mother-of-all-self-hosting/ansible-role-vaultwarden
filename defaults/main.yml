@@ -1,10 +1,11 @@
 # SPDX-FileCopyrightText: 2023 Antoine-Ali Zarrouk
-# SPDX-FileCopyrightText: 2023 - 2024 Nikita Chernyi
-# SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2023, 2024 Nikita Chernyi
+# SPDX-FileCopyrightText: 2023-2025 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2024 Julian-Samuel Gebühr
 # SPDX-FileCopyrightText: 2024 Sergio Durigan Junior
 # SPDX-FileCopyrightText: 2025 MASH project contributors
 # SPDX-FileCopyrightText: 2025 spatterlight
-# SPDX-FileCopyrightText: 2025 Suguru Hirahara
+# SPDX-FileCopyrightText: 2025, 2026 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -236,6 +237,12 @@ vaultwarden_container_cleanup_command: |
   echo "Failed to remove stale container {{ vaultwarden_identifier }} after {{ vaultwarden_container_cleanup_timeout_seconds }} attempts" >&2;
   exit 1
 
+########################################################################
+#                                                                      #
+# database                                                             #
+#                                                                      #
+########################################################################
+
 # Specify a database driver to use
 # Valid values: mysql, postgres, sqlite
 vaultwarden_database_type: postgres
@@ -257,21 +264,51 @@ vaultwarden_database_postgres_password: ""
 vaultwarden_database_postgres_sslmode: disable
 vaultwarden_database_name: vaultwarden
 
+# Control if the connection to MySQL is made via a Unix socket
+vaultwarden_database_mysql_socket_enabled: true
+
+# Specify the path to the MySQL Unix socket path on the host (bind-mount source)
+vaultwarden_database_mysql_socket_path_host: ""
+
+# Specify the path to the MySQL Unix socket path inside the Vaultwarden container
+vaultwarden_database_mysql_socket_path_container: /run-mysqld
+
+# Control if the connection to Postgres is made via a Unix socket
+vaultwarden_database_postgres_socket_enabled: false
+
+# Specify the path to the Postgres Unix socket path on the host (bind-mount source)
+vaultwarden_database_postgres_socket_path_host: ""
+
+# Specify the path to the Postgres Unix socket path inside the Vaultwarden container
+vaultwarden_database_postgres_socket_path_container: /run-postgres
+
 # vaultwarden_config_database_url controls the DATABASE_URL environment variable.
 # See https://github.com/dani-garcia/vaultwarden/wiki/Using-the-PostgreSQL-Backend,
 # https://github.com/dani-garcia/vaultwarden/blob/main/.env.template,
 # and the other database-related Wiki articles
 vaultwarden_config_database_url: |-
-  {{
-    ('postgresql://' + vaultwarden_database_postgres_username + ':' + vaultwarden_database_postgres_password + '@' + vaultwarden_database_postgres_hostname + ':' + vaultwarden_database_postgres_port | string + '/' + vaultwarden_database_name + '?sslmode=' + vaultwarden_database_postgres_sslmode)
-  }}
+  postgres://{{ vaultwarden_database_postgres_username }}:{{ vaultwarden_database_postgres_password }}@
+  {%- if vaultwarden_database_postgres_socket_enabled -%}
+  localhost/{{ vaultwarden_database_name }}?host={{ vaultwarden_database_postgres_socket_path_container }}
+  {%- else -%}
+  {{ vaultwarden_database_postgres_hostname }}:{{ vaultwarden_database_postgres_port }}/{{ vaultwarden_database_name }}?sslmode={{ vaultwarden_database_postgres_sslmode }}
+  {%- endif -%}
 
 vaultwarden_config_database_mysql_url: |-
-  {{
-    ('mysql://' + vaultwarden_database_mysql_username + ':' + vaultwarden_database_mysql_password + '@' + vaultwarden_database_mysql_hostname + ':' + vaultwarden_database_mysql_port | string + '/' + vaultwarden_database_name)
-  }}
+  mysql://{{ vaultwarden_database_mysql_username }}:{{ vaultwarden_database_mysql_password }}@
+  {%- if vaultwarden_database_mysql_socket_enabled -%}
+  localhost/{{ vaultwarden_database_name }}?unix_socket={{ vaultwarden_database_mysql_socket_path_container + '/mysqld.sock' }}
+  {%- else -%}
+  {{ vaultwarden_database_mysql_hostname }}:{{ vaultwarden_database_mysql_port }}/{{ vaultwarden_database_name }}
+  {%- endif -%}
 
 vaultwarden_config_database_sqlite_url: "data/db.sqlite3"
+
+########################################################################
+#                                                                      #
+# /database                                                            #
+#                                                                      #
+########################################################################
 
 # vaultwarden_config_domain controls the DOMAIN environment variable,
 # which tells Vaultwarden its full URL (e.g. `https://vaultwarden.DOMAIN/prefix`)

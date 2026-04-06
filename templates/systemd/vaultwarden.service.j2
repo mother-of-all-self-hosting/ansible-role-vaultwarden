@@ -1,6 +1,8 @@
 {#
-SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
 SPDX-FileCopyrightText: 2023 Antoine-Ali Zarrouk
+SPDX-FileCopyrightText: 2023-2025 Slavi Pantaleev
+SPDX-FileCopyrightText: 2024 Nikita Chernyi
+SPDX-FileCopyrightText: 2025, 2026 Suguru Hirahara
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -47,6 +49,12 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --mount type=bind,src={{ vaultwarden_data_path }},dst=/data \
       --mount type=bind,src={{ vaultwarden_cache_path }},dst=/cache \
       --mount type=bind,src={{ vaultwarden_ephemeral_path }},dst=/ephemeral \
+      {% if vaultwarden_database_type == 'mysql' and vaultwarden_database_mysql_socket_enabled and vaultwarden_database_mysql_socket_path_host != '' %}
+      --mount type=bind,src={{ vaultwarden_database_mysql_socket_path_host }},dst={{ vaultwarden_database_mysql_socket_path_container }} \
+      {% endif %}
+      {% if vaultwarden_database_type == 'postgres' and vaultwarden_database_postgres_socket_enabled and vaultwarden_database_postgres_socket_path_host != '' %}
+      --mount type=bind,src={{ vaultwarden_database_postgres_socket_path_host }},dst={{ vaultwarden_database_postgres_socket_path_container }} \
+      {% endif %}
       --tmpfs=/tmp:rw,noexec,nosuid,size={{ vaultwarden_container_tmpfs_tmp_size }} \
       {% for arg in vaultwarden_container_extra_arguments %}
       {{ arg }} \
