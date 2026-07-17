@@ -23,6 +23,12 @@
         fail_msg: "vaultwarden.service not active ({{ vaultwarden_service.status.ActiveState }})"
         success_msg: "vaultwarden.service is active"
 
+    - name: Retrieve Vaultwarden service log for debugging
+      when: vaultwarden_debug_service_enabled | bool
+      ansible.builtin.command:
+        cmd: journalctl -xeu vaultwarden.service
+      changed_when: false
+
     - name: Wait for Vaultwarden HTTP endpoint to respond (up to 10m)
       ansible.builtin.uri:
         url: "http://localhost:8080/"

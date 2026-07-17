@@ -27,6 +27,10 @@ provisioner:
   inventory:
     group_vars:
       all:
+        # Helper variables
+        vaultwarden_debug_service_enabled: false
+
+        # Variables for Vaultwarden
         vaultwarden_uid: 1000
         vaultwarden_gid: 1000
         vaultwarden_hostname: vaultwarden
