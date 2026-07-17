@@ -33,7 +33,8 @@ provisioner:
         # Variables for Vaultwarden
         vaultwarden_uid: 1000
         vaultwarden_gid: 1000
-        vaultwarden_hostname: vaultwarden
+        vaultwarden_scheme: http
+        vaultwarden_hostname: localhost
         vaultwarden_container_labels_traefik_enabled: false
         vaultwarden_container_http_host_bind_port: 8080
         vaultwarden_database_type: sqlite
