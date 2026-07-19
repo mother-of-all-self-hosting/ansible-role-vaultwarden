@@ -49,6 +49,10 @@ Currently these testing scenarios are available:
 
 Tests a standard Vaultwarden installation.
 
+### `mariadb`
+
+Tests a standard Vaultwarden installation with the MariaDB database.
+
 ### `postgres`
 
 Tests a standard Vaultwarden installation with the Postgres database.
