@@ -19,6 +19,7 @@ jobs:
           - debian13
         scenario:
           - default
+          - postgres
       fail-fast: false
 
     env:
