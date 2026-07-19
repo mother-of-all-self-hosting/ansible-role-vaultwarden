@@ -49,6 +49,10 @@ Currently these testing scenarios are available:
 
 Tests a standard Vaultwarden installation.
 
+### `default-selfbuild`
+
+Tests a standard Vaultwarden installation with self-building the container image.
+
 ### `mariadb`
 
 Tests a standard Vaultwarden installation with the MariaDB database.
