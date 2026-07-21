@@ -19,6 +19,9 @@ jobs:
           - debian13
         scenario:
           - default
+          - default-selfbuild
+          - mariadb
+          - postgres
       fail-fast: false
 
     env:

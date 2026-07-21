@@ -43,11 +43,23 @@ pip3 install -r ./molecule/requirements.txt
 
 ## Scenarios
 
-Currently there is one testing scenario available.
+Currently these testing scenarios are available:
 
 ### `default`
 
 Tests a standard Vaultwarden installation.
+
+### `default-selfbuild`
+
+Tests a standard Vaultwarden installation with self-building the container image.
+
+### `mariadb`
+
+Tests a standard Vaultwarden installation with the MariaDB database.
+
+### `postgres`
+
+Tests a standard Vaultwarden installation with the Postgres database.
 
 ## Running
 
