@@ -38,9 +38,9 @@ provisioner:
         vaultwarden_hostname: localhost
         vaultwarden_container_labels_traefik_enabled: false
         vaultwarden_container_http_host_bind_port: 8080
-        vaultwarden_database_type: postgres
 
         # Variables required for Vaultwarden to connect to the Postgres database (via Unix socket)
+        vaultwarden_database_type: postgres
         vaultwarden_database_postgres_username: my_database_username
         vaultwarden_database_postgres_password: my_database_password
         vaultwarden_database_postgres_sslmode: disable
