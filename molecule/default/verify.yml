@@ -46,7 +46,7 @@
         fail_msg: "Vaultwarden did not respond as expected ({{ vaultwarden_endpoint.status | default('no response') }})"
         success_msg: "Vaultwarden responded with {{ vaultwarden_endpoint.status }}"
 
-    - name: Show Vaultwarden systemd service status summary
+    - name: Show the Vaultwarden verification summary
       ansible.builtin.debug:
         msg:
           - "Vaultwarden systemd: {{ vaultwarden_service.status.ActiveState }}"
