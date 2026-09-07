@@ -9,21 +9,27 @@
   become: true
   gather_facts: false
   tasks:
-    - name: Wait for Vaultwarden service to become active (up to 180s)
-      ansible.builtin.systemd:
+    - name: Wait for the Vaultwarden systemd service to become active (up to 180s)
+      ansible.builtin.systemd_service:
         name: vaultwarden.service
       register: vaultwarden_service
       until: vaultwarden_service.status.ActiveState == 'active'
       retries: 36
       delay: 5
+      # So that giving up is reported by the assertion below rather than as a
+      # wall of systemd unit properties.
+      failed_when: false
 
-    - name: Assert Vaultwarden service is active
+    # `Restart=always` in the systemd unit means that even a container which crashes
+    # and gets restarted reads as active here, so this is a precondition rather than
+    # a result.
+    - name: Assert the Vaultwarden systemd service is active
       ansible.builtin.assert:
         that: vaultwarden_service.status.ActiveState == 'active'
-        fail_msg: "vaultwarden.service not active ({{ vaultwarden_service.status.ActiveState }})"
+        fail_msg: "vaultwarden.service is not active ({{ vaultwarden_service.status.ActiveState }})"
         success_msg: "vaultwarden.service is active"
 
-    - name: Retrieve Vaultwarden service log for debugging
+    - name: Retrieve the Vaultwarden systemd service log for debugging
       when: vaultwarden_debug_service_enabled | bool
       ansible.builtin.command:
         cmd: journalctl -xeu vaultwarden.service
