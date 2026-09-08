@@ -32,7 +32,7 @@
     - name: Retrieve the Vaultwarden systemd service log for debugging
       when: vaultwarden_debug_service_enabled | bool
       ansible.builtin.command:
-        cmd: journalctl -xeu vaultwarden.service
+        cmd: journalctl --no-pager --output=cat --unit=vaultwarden.service
       changed_when: false
 
     - name: Wait for Vaultwarden HTTP endpoint to respond (up to 10m)
