@@ -11,54 +11,54 @@
   tasks:
     - name: Verify that Vaultwarden works
       block:
-    - name: Wait for the Vaultwarden systemd service to become active (up to 180s)
-      ansible.builtin.systemd_service:
-        name: vaultwarden.service
-      register: vaultwarden_service
-      until: vaultwarden_service.status.ActiveState == 'active'
-      retries: 36
-      delay: 5
-      # So that giving up is reported by the assertion below rather than as a
-      # wall of systemd unit properties.
-      failed_when: false
+        - name: Wait for the Vaultwarden systemd service to become active (up to 180s)
+          ansible.builtin.systemd_service:
+            name: vaultwarden.service
+          register: vaultwarden_service
+          until: vaultwarden_service.status.ActiveState == 'active'
+          retries: 36
+          delay: 5
+          # So that giving up is reported by the assertion below rather than as a
+          # wall of systemd unit properties.
+          failed_when: false
 
-    # `Restart=always` in the systemd unit means that even a container which crashes
-    # and gets restarted reads as active here, so this is a precondition rather than
-    # a result.
-    - name: Assert the Vaultwarden systemd service is active
-      ansible.builtin.assert:
-        that: vaultwarden_service.status.ActiveState == 'active'
-        fail_msg: "vaultwarden.service is not active ({{ vaultwarden_service.status.ActiveState }})"
-        success_msg: "vaultwarden.service is active"
+        # `Restart=always` in the systemd unit means that even a container which crashes
+        # and gets restarted reads as active here, so this is a precondition rather than
+        # a result.
+        - name: Assert the Vaultwarden systemd service is active
+          ansible.builtin.assert:
+            that: vaultwarden_service.status.ActiveState == 'active'
+            fail_msg: "vaultwarden.service is not active ({{ vaultwarden_service.status.ActiveState }})"
+            success_msg: "vaultwarden.service is active"
 
-    - name: Retrieve the Vaultwarden systemd service log for debugging
-      when: vaultwarden_debug_service_enabled | bool
-      ansible.builtin.command:
-        cmd: journalctl --no-pager --output=cat --unit=vaultwarden.service
-      changed_when: false
+        - name: Retrieve the Vaultwarden systemd service log for debugging
+          when: vaultwarden_debug_service_enabled | bool
+          ansible.builtin.command:
+            cmd: journalctl --no-pager --output=cat --unit=vaultwarden.service
+          changed_when: false
 
-    - name: Wait for Vaultwarden HTTP endpoint to respond (up to 10m)
-      ansible.builtin.uri:
-        url: "http://localhost:8080/"
-        method: GET
-        status_code: [200, 302]
-        follow_redirects: none
-      register: vaultwarden_endpoint
-      until: vaultwarden_endpoint.status in [200, 302]
-      retries: 120
-      delay: 5
+        - name: Wait for Vaultwarden HTTP endpoint to respond (up to 10m)
+          ansible.builtin.uri:
+            url: "http://localhost:8080/"
+            method: GET
+            status_code: [200, 302]
+            follow_redirects: none
+          register: vaultwarden_endpoint
+          until: vaultwarden_endpoint.status in [200, 302]
+          retries: 120
+          delay: 5
 
-    - name: Assert Vaultwarden HTTP endpoint responds
-      ansible.builtin.assert:
-        that: vaultwarden_endpoint.status in [200, 302]
-        fail_msg: "Vaultwarden did not respond as expected ({{ vaultwarden_endpoint.status | default('no response') }})"
-        success_msg: "Vaultwarden responded with {{ vaultwarden_endpoint.status }}"
+        - name: Assert Vaultwarden HTTP endpoint responds
+          ansible.builtin.assert:
+            that: vaultwarden_endpoint.status in [200, 302]
+            fail_msg: "Vaultwarden did not respond as expected ({{ vaultwarden_endpoint.status | default('no response') }})"
+            success_msg: "Vaultwarden responded with {{ vaultwarden_endpoint.status }}"
 
-    - name: Show the Vaultwarden verification summary
-      ansible.builtin.debug:
-        msg:
-          - "Vaultwarden systemd: {{ vaultwarden_service.status.ActiveState }}"
-          - "Vaultwarden HTTP: {{ vaultwarden_endpoint.status }}"
+        - name: Show the Vaultwarden verification summary
+          ansible.builtin.debug:
+            msg:
+              - "Vaultwarden systemd: {{ vaultwarden_service.status.ActiveState }}"
+              - "Vaultwarden HTTP: {{ vaultwarden_endpoint.status }}"
 
       rescue:
         # Whatever went wrong, the reason is almost always in the systemd service log.
