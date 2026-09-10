@@ -9,6 +9,8 @@
   become: true
   gather_facts: false
   tasks:
+    - name: Verify that Vaultwarden works
+      block:
     - name: Wait for the Vaultwarden systemd service to become active (up to 180s)
       ansible.builtin.systemd_service:
         name: vaultwarden.service
@@ -57,3 +59,19 @@
         msg:
           - "Vaultwarden systemd: {{ vaultwarden_service.status.ActiveState }}"
           - "Vaultwarden HTTP: {{ vaultwarden_endpoint.status }}"
+
+      rescue:
+        # Whatever went wrong, the reason is almost always in the systemd service log.
+        - name: Retrieve the Vaultwarden systemd service log
+          ansible.builtin.command:
+            cmd: journalctl --no-pager --output=cat --unit=vaultwarden.service
+          register: vaultwarden_service_log
+          changed_when: false
+
+        - name: Show the Vaultwarden systemd service log
+          ansible.builtin.debug:
+            var: vaultwarden_service_log.stdout_lines
+
+        - name: Fail because verification did not pass
+          ansible.builtin.fail:
+            msg: "Vaultwarden verification failed. The systemd service log is printed above."
