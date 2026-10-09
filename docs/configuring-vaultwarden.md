@@ -115,32 +115,6 @@ vaultwarden_database_mysql_socket_enabled: false
 vaultwarden_database_postgres_socket_enabled: false
 ```
 
-### Configuring a Redis database (optional)
-
-You can optionally enable a [Redis](https://redis.io/) database for the Vaultwarden instance. [Valkey](https://valkey.io/) can also be used instead.
-
-To enable the Redis database for Vaultwarden, add the following configuration to your `vars.yml` file. Note that the role is by default configured to establish connection with the Redis database via the Unix socket.
-
-```yaml
-# Specify the path to the Redis Unix socket path on the host (bind-mount source)
-vaultwarden_redis_socket_path_host: ""
-
-vaultwarden_redis_database: 0
-```
-
-If TCP connection is preferred, connection via the Unix socket can be disabled by adding the following configuration to your `vars.yml` file:
-
-```yaml
-# Disable the connection to Redis via a Unix socket
-vaultwarden_redis_socket_enabled: false
-
-vaultwarden_redis_hostname: YOUR_REDIS_SERVER_HOSTNAME_HERE
-```
-
-Make sure to replace `YOUR_REDIS_SERVER_HOSTNAME_HERE` with your own value.
-
-If you are looking for an Ansible role for Redis, you can check out [ansible-role-redis](https://github.com/mother-of-all-self-hosting/ansible-role-redis) maintained by the [Mother-of-All-Self-Hosting (MASH)](https://github.com/mother-of-all-self-hosting) team. The role for Valkey ([ansible-role-valkey](https://github.com/mother-of-all-self-hosting/ansible-role-valkey)) is available as well.
-
 ### Configuring the mailer (optional)
 
 You can configure a SMTP mailer to enable it for signing up and resetting password. If it is disabled, all users are enabled right away and password reset will not be possible.
@@ -190,20 +164,6 @@ vaultwarden_environment_variables_service_enableregistration: true
 
 Alternatively, you can also create users by running the command to run [`user create`](https://vaultwarden.io/docs/cli/#user-create) inside the container. See below in [this section](#creating-users) for the usage.
 
-### Configuring rate limit
-
-You can enable the rate limit by adding the following configuration to your `vars.yml` file:
-
-```yaml
-vaultwarden_environment_variables_ratelimit_enabled: true
-```
-
-### Integrating with Prometheus (optional)
-
-Vaultwarden can natively expose metrics to Prometheus.
-
-If you are looking for an integration, you can check out the MASH playbook. Refer to [this section of the documentation on the playbook](https://github.com/mother-of-all-self-hosting/mash-playbook/blob/main/docs/services/vaultwarden.md#integrating-with-prometheus-optional) for more information.
-
 ### Extending the configuration
 
 There are some additional things you may wish to configure about the service.
@@ -227,72 +187,6 @@ If you use the MASH playbook, the shortcut commands with the [`just` program](ht
 ## Usage
 
 After running the command for installation, Vaultwarden becomes available at the specified hostname like `https://example.com`.
-
-To get started, create a user first and open the URL with a web browser to log in to the instance. You can create one on the web UI if `vaultwarden_environment_variables_service_enableregistration` is set to `true`.
-
-Alternatively, you can run the command below to create users.
-
-### Creating users
-
-#### Creating a user manually
-
-You can create a user by running the command below:
-
-```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=create-user-vaultwarden -e username=USERNAME_HERE -e password=PASSWORD_HERE -e email=EMAIL_ADDRESS_HERE
-```
-
-#### Creating users automatically
-
-It is also possible to create muitiple users specified with `vaultwarden_users_custom` on your `vars.yml` file by running the command below:
-
-```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=ensure-vaultwarden-users-created
-```
-
-Those users can be specified like below:
-
-```yaml
-vaultwarden_users_custom:
-  - username: user
-    initial_email: user@example.com
-    initial_password: password
-  - username: user
-    initial_email: user@example.com
-    initial_password: password
-```
-
-### Running the CLI command
-
-It is possible to run commands on the command line inside the container by running the `cli-vaultwarden` tag, setting the `command` extra variable.
-
-For example, you can run the command `version` by running the playbook with the tag as below:
-
-```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=cli-vaultwarden -e command='version'
-```
-
-Refer to [this page](https://vaultwarden.io/docs/cli/) for the list of available commands.
-
-### Typesense integration for enhanced search capabilities
-
-Vaultwarden supports [Typesense](https://typesense.org/), which allows fast fulltext search with fuzzy matching support. To enable it, the following configuration to your `vars.yml` file:
-
-```yaml
-vaultwarden_environment_variables_typesense_enabled: true
-vaultwarden_environment_variables_typesense_url: TYPESENSE_INSTANCE_URL_HERE
-vaultwarden_environment_variables_typesense_apikey: TYPESENSE_ADMIN_API_KEY_HERE
-```
-
-Make sure to replace `TYPESENSE_INSTANCE_URL_HERE` and `TYPESENSE_ADMIN_API_KEY_HERE` with your own values.
-
-After adding the configuration and restarting the service, it is necessary to run `vaultwarden index` to have Typesense index tasks in the Vaultwarden instance. You can invoke it by running the playbook below:
-
-```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=cli-vaultwarden -e command='index'
-```
-
-Refer to [this page](https://vaultwarden.io/docs/typesense/) as well.
 
 ## Troubleshooting
 
