@@ -21,11 +21,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Setting up Vaultwarden
 
-This is an [Ansible](https://www.ansible.com/) role which installs [Vaultwarden](https://vaultwarden.io/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
+This is an [Ansible](https://www.ansible.com/) role which installs [Vaultwarden](https://github.com/dani-garcia/vaultwarden) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
-Vaultwarden is a self-hosted to-do application.
+Vaultwarden is an unofficial [Bitwarden](https://bitwarden.com/) compatible server.
 
-See the project's [documentation](https://vaultwarden.io/docs/) to learn what Vaultwarden does and why it might be useful to you.
+See the project's [documentation](https://github.com/dani-garcia/vaultwarden/blob/main/README.md) to learn what Vaultwarden does and why it might be useful to you.
 
 ## Prerequisites
 
@@ -65,15 +65,18 @@ vaultwarden_hostname: "example.com"
 
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
 
-**Note**: hosting Vaultwarden under a subpath (by configuring the `vaultwarden_path_prefix` variable) does not seem to be possible due to Vaultwarden's technical limitations.
+>[!NOTE]
+> For additional security, it is recommended to host the Vaultwarden instance at a subpath with `vaultwarden_path_prefix`. When using the path prefix, Vaultwarden will be available at `https://example.com/PATH_PREFIX`, while opening the home page URL (/) returns a 404 HTTP error. Refer to [this page](https://github.com/dani-garcia/vaultwarden/wiki/Hardening-Guide#hiding-under-a-subdir) on the official documentation for details.
 
-### Set a random string for JWT tokens verification
+### Setting a random string for admin secret (optional)
 
-You also need to set a random string used for verifying issued JWT tokens. To do so, add the following configuration to your `vars.yml` file. The value can be generated with `pwgen -s 64 1` or in another way.
+You also need to set a random string used as administration secret to access the `/admin` section. To do so, add the following configuration to your `vars.yml` file. The value can be generated with `pwgen -s 64 1` or in another way.
 
 ```yaml
-vaultwarden_environment_variables_service_secret: YOUR_SECRET_KEY_HERE
+vaultwarden_config_admin_token: YOUR_SECRET_KEY_HERE
 ```
+
+Removing the line will disable the `/admin` section.
 
 ### Configuring database
 
@@ -115,54 +118,51 @@ vaultwarden_database_mysql_socket_enabled: false
 vaultwarden_database_postgres_socket_enabled: false
 ```
 
-### Configuring the mailer (optional)
+### Enabling user registration (optional)
 
-You can configure a SMTP mailer to enable it for signing up and resetting password. If it is disabled, all users are enabled right away and password reset will not be possible.
-
-To configure it, add the following configuration to your `vars.yml` file as below (adapt to your needs):
+By default the role is configured to disable user registration. You can enable it by adding the following configuration to your `vars.yml` file:
 
 ```yaml
-# Set to `true` to enable mailer
-vaultwarden_mailer_enabled: true
+vaultwarden_config_signups_enabled: true
+```
 
+### Enabling user verification (optional)
+
+To require email address verification before users can log in to the Vaultwarden instance, add the following configuration to your `vars.yml` file:
+
+```yaml
+vaultwarden_config_signups_verify: true
+```
+
+>[!NOTE]
+> When enabled, settings for a SMTP mailer are required to be specified.
+
+### Configuring the mailer (optional)
+
+To configure a SMTP mailer, add the following configuration to your `vars.yml` file as below (adapt to your needs):
+
+```yaml
 # Specify SMTP server hostname
-vaultwarden_environment_variables_smtp_host: ""
+vaultwarden_config_smtp_host: ""
 
 # Specify SMTP server port number
-vaultwarden_environment_variables_smtp_port: 587
+vaultwarden_config_smtp_port: 587
 
 # Specify SMTP server username
-vaultwarden_environment_variables_smtp_user: ""
+vaultwarden_config_smtp_username: ""
 
 # Specify SMTP server password
-vaultwarden_environment_variables_smtp_password: ""
+vaultwarden_config_smtp_password: ""
 
 # Specify the email address that emails will be sent from
-vaultwarden_environment_variables_smtp_from: ""
+vaultwarden_config_smtp_from: ""
 
 # Specify the SMTP Auth Type
-# Valid values: plain, login, cram-md5
-vaultwarden_environment_variables_smtp_authtype: plain
-
-# Set to `true` to skip verification of the TLS certificate on the server
-vaultwarden_environment_variables_skiptlsverify: false
-
-# Set to `true` to use SSL instead of STARTTLS
-vaultwarden_environment_variables_smtp_forcessl: false
+vaultwarden_config_smtp_security: starttls
 ```
 
 >[!WARNING]
 > Without setting an authentication method such as DKIM, SPF, and DMARC for your hostname, emails are most likely to be quarantined as spam at recipient's mail servers. The worst scenario is that your server's IP address or hostname will be included in the spam list such as the one managed by [Spamhaus](https://www.spamhaus.org/). If you have set up a mail server with the [MASH project's exim-relay Ansible role](https://github.com/mother-of-all-self-hosting/ansible-role-exim-relay), you can enable DKIM signing with it. Refer [its documentation](https://github.com/mother-of-all-self-hosting/ansible-role-exim-relay/blob/main/docs/configuring-exim-relay.md#enable-dkim-support-optional) for details.
-
-### Enabling user registration
-
-By default the role is configured to disable user registration. You can enable it by adding the following configuration to your `vars.yml` file.
-
-```yaml
-vaultwarden_environment_variables_service_enableregistration: true
-```
-
-Alternatively, you can also create users by running the command to run [`user create`](https://vaultwarden.io/docs/cli/#user-create) inside the container. See below in [this section](#creating-users) for the usage.
 
 ### Extending the configuration
 
@@ -172,7 +172,7 @@ Take a look at:
 
 - [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `vaultwarden_environment_variables_additional_variables` variable
 
-Refer to [the official documentation](https://vaultwarden.io/docs/config-options/) for a complete list of Vaultwarden's config options that you can put in `vaultwarden_environment_variables_additional_variables`.
+Refer to [the official documentation](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template) for a complete list of Vaultwarden's config options that you can put in `vaultwarden_environment_variables_additional_variables`.
 
 ## Installing
 
@@ -188,6 +188,13 @@ If you use the MASH playbook, the shortcut commands with the [`just` program](ht
 
 After running the command for installation, Vaultwarden becomes available at the specified hostname like `https://example.com`.
 
+To get started, open the URL `https://example.com/PATH_PREFIX/admin` with a web browser to create an account. Note the URL is accessible with an admin token, as specified with `vaultwarden_config_admin_token` on your `vars.yml` file.
+
+If you hadn't enabled the `/admin` feature (by defining `vaultwarden_config_admin_token`), you would:
+
+- **either** need to do so and re-run the playbook
+- **or** to enable public registration (`vaultwarden_config_signups_enabled: true`) at least temporarily.
+
 ## Troubleshooting
 
 ### Check the service's logs
@@ -199,5 +206,5 @@ You can find the logs in [systemd-journald](https://www.freedesktop.org/software
 If you want to increase the verbosity, add the following configuration to your `vars.yml` file:
 
 ```yaml
-vaultwarden_environment_variables_log_level: DEBUG
+vaultwarden_config_log_level: debug
 ```
