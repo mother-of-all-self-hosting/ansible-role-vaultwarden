@@ -77,19 +77,19 @@ vaultwarden_environment_variables_service_secret: YOUR_SECRET_KEY_HERE
 
 ### Configuring database
 
-#### Specify database
+#### Specify database (optional)
 
-It is necessary to select database used by Vaultwarden from a MySQL compatible database, Postgres, and SQLite.
+You can specify a database used by Vaultwarden. By default it is configured to use Postgres.
 
-To use Postgres, add the following configuration to your `vars.yml` file:
+To use SQLite, add the following configuration to your `vars.yml` file:
 
 ```yaml
-vaultwarden_database_type: postgres
+vaultwarden_database_type: sqlite
 ```
 
-Set `mysql` to use a MySQL compatible database and `sqlite` to use SQLite, respectively. The SQLite database is stored in the directory specified with `vaultwarden_database_path`.
+Set `mysql` to use a MySQL compatible database. The SQLite database is stored in the directory specified with `vaultwarden_data_path`.
 
-For other settings, check variables such as `vaultwarden_database_postgres_*` and `vaultwarden_database_mysql_*` on [`defaults/main.yml`](../defaults/main.yml).
+For other settings, check variables such as `vaultwarden_database_*` on [`defaults/main.yml`](../defaults/main.yml).
 
 #### Configuring connection to the database server (optional)
 
