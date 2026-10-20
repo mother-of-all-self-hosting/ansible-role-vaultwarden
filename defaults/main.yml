@@ -87,6 +87,9 @@ vaultwarden_container_labels_traefik_priority: 0
 vaultwarden_container_labels_traefik_entrypoints: web-secure
 vaultwarden_container_labels_traefik_tls: "{{ vaultwarden_container_labels_traefik_entrypoints != 'web' }}"
 vaultwarden_container_labels_traefik_tls_certResolver: default  # noqa var-naming
+vaultwarden_container_labels_traefik_middleware_basic_auth_enabled: false
+# See: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/basicauth/
+vaultwarden_container_labels_traefik_middleware_basic_auth_users: ""
 
 # Controls whether a compression middleware will be injected into the middlewares list.
 # This compression middleware is supposed to be defined elsewhere (using labels or a File provider, etc.) and is merely referenced by this router.
