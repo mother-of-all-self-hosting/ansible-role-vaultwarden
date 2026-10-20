@@ -143,22 +143,22 @@ To configure a SMTP mailer, add the following configuration to your `vars.yml` f
 
 ```yaml
 # Specify SMTP server hostname
-vaultwarden_config_smtp_host: ""
+vaultwarden_environment_variables_smtp_host: ""
 
 # Specify SMTP server port number
-vaultwarden_config_smtp_port: 587
+vaultwarden_environment_variables_smtp_port: 587
 
 # Specify SMTP server username
-vaultwarden_config_smtp_username: ""
+vaultwarden_environment_variables_smtp_username: ""
 
 # Specify SMTP server password
-vaultwarden_config_smtp_password: ""
+vaultwarden_environment_variables_smtp_password: ""
 
 # Specify the email address that emails will be sent from
-vaultwarden_config_smtp_from: ""
+vaultwarden_environment_variables_smtp_from: ""
 
 # Specify the SMTP Auth Type
-vaultwarden_config_smtp_security: starttls
+vaultwarden_environment_variables_smtp_security: starttls
 ```
 
 >[!WARNING]
