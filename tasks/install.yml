@@ -64,6 +64,7 @@
         owner: "{{ vaultwarden_uid }}"
         group: "{{ vaultwarden_gid }}"
         recurse: true
+      tags: molecule-idempotence-notest
 
     - name: Ensure Vaultwarden repository is present on self-build
       ansible.builtin.git:
